@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vovsike-co-uk
+  namespace: envoy-gateway-system
+spec:
+  secretName: vovsike-co-uk
+  issuerRef:
+    name: letsencrypt
+  dnsNames:
+  - vovsike.co.uk
