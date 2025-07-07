@@ -16,7 +16,7 @@ spec:
       - name: "crds.enabled"
         value: "true"
       - name: extraArgs
-        value: --enable-gateway-api
+        value: {--enable-gateway-api}
   destination:
     namespace: cert-manager
     server: https://kubernetes.default.svc
