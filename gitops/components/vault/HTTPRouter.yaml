@@ -1,0 +1,23 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: vault-route
+  namespace: vault
+spec:
+  parentRefs:
+  - name: eg
+    namespace: envoy-gateway-system
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /vault-ui
+    filters:
+      - type: URLRewrite
+        urlRewrite:
+          path:
+            type: ReplacePrefixMatch
+            replacePrefixMatch: /
+    backendRefs:
+    - name: vault-ui
+      port: 443

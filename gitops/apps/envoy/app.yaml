@@ -34,7 +34,7 @@ metadata:
 spec:
   project: default
   source:
-    path: gitops/components
+    path: gitops/components/envoy
     repoURL: https://github.com/vovsike/DO.git
     targetRevision: HEAD
   destination:
