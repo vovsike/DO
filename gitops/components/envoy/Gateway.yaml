@@ -17,6 +17,11 @@ spec:
     allowedRoutes:
       namespaces:
         from: All
+    tls:
+      certificateRefs:
+        - group: ""
+          kind: Secret
+          name: vault-vovsike-co-uk-staging
   - name: https
     allowedRoutes:
       namespaces:

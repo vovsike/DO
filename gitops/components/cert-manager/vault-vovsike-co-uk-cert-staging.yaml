@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vovsike-co-uk-staging
+  namespace: envoy-gateway-system
+spec:
+  secretName: vault-vovsike-co-uk-staging
+  issuerRef:
+    name: letsencrypt-staging
+  dnsNames:
+  - vault.vovsike.co.uk
