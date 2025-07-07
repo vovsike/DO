@@ -20,4 +20,4 @@ spec:
             replacePrefixMatch: /
     backendRefs:
     - name: vault-ui
-      port: 443
+      port: 8200
