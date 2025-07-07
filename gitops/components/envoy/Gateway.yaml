@@ -12,7 +12,7 @@ spec:
     hostname: vovsike.co.uk
   - name: vault
     port: 443
-    protocol: HTTP
+    protocol: HTTPS
     hostname: vault.vovsike.co.uk
   - name: https
     allowedRoutes:
