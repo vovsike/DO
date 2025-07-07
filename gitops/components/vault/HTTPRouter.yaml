@@ -6,18 +6,15 @@ metadata:
 spec:
   parentRefs:
   - name: eg
+    sectionName: vault
     namespace: envoy-gateway-system
+  hostnames:
+    - "vault.vovsike.co.uk"
   rules:
   - matches:
     - path:
         type: PathPrefix
-        value: /vault-ui
-    filters:
-      - type: URLRewrite
-        urlRewrite:
-          path:
-            type: ReplacePrefixMatch
-            replacePrefixMatch: /
+        value: /
     backendRefs:
     - name: vault-ui
       port: 8200

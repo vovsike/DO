@@ -10,6 +10,10 @@ spec:
     port: 80
     protocol: HTTP
     hostname: vovsike.co.uk
+  - name: vault
+    port: 443
+    protocol: HTTP
+    hostname: vault.vovsike.co.uk
   - name: https
     allowedRoutes:
       namespaces:
