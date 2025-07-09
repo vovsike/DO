@@ -8,7 +8,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: role-tokenreview-binding
-  namespace: vault-op
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -29,3 +28,28 @@ spec:
   kubernetes:
     role: vault_operator_super_admin
     serviceAccount: vault-op
+    audiences:
+      - vault
+      - "system:konnectivity-server"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: role-tokenreview-auth
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:authenticated
+subjects:
+  - kind: ServiceAccount
+    name: vault-op
+    namespace: vault-op
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vault-op
+  namespace: vault-op
+  annotations:
+    kubernetes.io/service-account.name: vault-op
+type: kubernetes.io/service-account-token
