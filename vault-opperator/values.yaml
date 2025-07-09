@@ -1,0 +1,4 @@
+defaultVaultConnection:
+  enabled: true
+  address: "https://vault.vovsike.co.uk"
+  skipTLSVerify: false

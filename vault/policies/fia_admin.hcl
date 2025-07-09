@@ -1,5 +1,5 @@
 path "fia/*" {
-    capabilities = ["sudo"]
+    capabilities = ["create", "read", "update", "list", "patch", "delete"]
 }
 
 path "fia_pki/*" {
