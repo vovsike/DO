@@ -1,25 +1,25 @@
 resource "vault_mount" "fia_kv2" {
-  path = "fia"
-  type = "kv-v2"
-  options = {version = "2"}
+  path    = "fia"
+  type    = "kv-v2"
+  options = { version = "2" }
 }
 
 resource "vault_mount" "fase_kv2" {
-  path = "fase"
-  type = "kv-v2"
-  options = {version = "2"}
+  path    = "fase"
+  type    = "kv-v2"
+  options = { version = "2" }
 }
 
 resource "vault_mount" "isis_observability_kv2" {
-  path = "isis_observability"
-  type = "kv-v2"
-  options = {version = "2"}
+  path    = "isis_observability"
+  type    = "kv-v2"
+  options = { version = "2" }
 }
 
 resource "vault_mount" "isis_security_kv2" {
-  path = "isis_security"
-  type = "kv-v2"
-  options = {version = "2"}
+  path    = "isis_security"
+  type    = "kv-v2"
+  options = { version = "2" }
 }
 
 resource "vault_mount" "fia_db" {
