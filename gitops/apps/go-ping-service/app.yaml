@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/vovsike/DO.git
     targetRevision: main
-    path: gitops/components/go-ping-service/overlayes/prod
+    path: gitops/components/go-ping-service/overlays/prod
     kustomize: {}
   destination:
     server: https://kubernetes.default.svc
