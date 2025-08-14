@@ -10,25 +10,6 @@ spec:
     port: 80
     protocol: HTTP
     hostname: vovsike.co.uk
-  - name: vault-http
-    port: 80
-    protocol: HTTP
-    hostname: vault.vovsike.co.uk
-    allowedRoutes:
-      namespaces:
-        from: All
-  - name: vault
-    port: 443
-    protocol: HTTPS
-    hostname: vault.vovsike.co.uk
-    allowedRoutes:
-      namespaces:
-        from: All
-    tls:
-      certificateRefs:
-        - group: ""
-          kind: Secret
-          name: vault-vovsike-co-uk
   - name: https
     allowedRoutes:
       namespaces:

@@ -1,7 +1,0 @@
-injector:
-  enabled: false
-server:
-  image:
-    tag: 1.20.0
-ui:
-  enabled: true
