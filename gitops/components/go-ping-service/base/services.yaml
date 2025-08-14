@@ -9,7 +9,6 @@ metadata:
   name: go-ping-service
   namespace: apps
 spec:
-  selector: {}
   ports:
     - name: http
       port: 80
@@ -21,7 +20,6 @@ metadata:
   name: go-ping-service-preview
   namespace: apps
 spec:
-  selector: {}
   ports:
     - name: http
       port: 80
