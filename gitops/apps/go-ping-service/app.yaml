@@ -12,6 +12,19 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: apps
+  ignoreDifferences:
+    - group: ""
+      kind: Service
+      name: go-ping-service
+      namespace: apps
+      jsonPointers:
+        - /spec/selector/rollouts-pod-template-hash
+    - group: ""
+      kind: Service
+      name: go-ping-service-preview
+      namespace: apps
+      jsonPointers:
+        - /spec/selector/rollouts-pod-template-hash
   syncPolicy:
     automated:
       prune: true
