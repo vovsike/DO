@@ -12,19 +12,19 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: apps
-  ignoreDifferences:
-    - group: ""
-      kind: Service
-      name: go-ping-service
-      namespace: apps
-      jsonPointers:
-        - /spec/selector
-    - group: ""
-      kind: Service
-      name: go-ping-service-preview
-      namespace: apps
-      jsonPointers:
-        - /spec/selector
+  # ignoreDifferences:
+  #   - group: ""
+  #     kind: Service
+  #     name: go-ping-service
+  #     namespace: apps
+  #     jsonPointers:
+  #       - /spec/selector
+  #   - group: ""
+  #     kind: Service
+  #     name: go-ping-service-preview
+  #     namespace: apps
+  #     jsonPointers:
+  #       - /spec/selector
   syncPolicy:
     automated:
       prune: true

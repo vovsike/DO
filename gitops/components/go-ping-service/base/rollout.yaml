@@ -3,8 +3,8 @@ kind: Rollout
 metadata:
   name: go-ping-service
   namespace: apps
-  annotations:
-    argocd.argoproj.io/sync-options: Prune=false, SkipDryRunOnMissingResource=true
+  # annotations:
+  #   argocd.argoproj.io/sync-options: Prune=false, SkipDryRunOnMissingResource=true
 spec:
   replicas: 3
   revisionHistoryLimit: 2
@@ -22,7 +22,6 @@ spec:
           ports:
             - name: http
               containerPort: 3000
-
   strategy:
     blueGreen:
       activeService: go-ping-service
