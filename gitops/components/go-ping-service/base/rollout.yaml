@@ -3,8 +3,6 @@ kind: Rollout
 metadata:
   name: go-ping-service
   namespace: apps
-  # annotations:
-  #   argocd.argoproj.io/sync-options: Prune=false, SkipDryRunOnMissingResource=true
 spec:
   replicas: 3
   revisionHistoryLimit: 2
