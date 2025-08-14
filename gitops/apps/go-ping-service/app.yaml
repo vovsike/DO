@@ -18,13 +18,13 @@ spec:
       name: go-ping-service
       namespace: apps
       jsonPointers:
-        - /spec/selector/rollouts-pod-template-hash
+        - /spec/selector
     - group: ""
       kind: Service
       name: go-ping-service-preview
       namespace: apps
       jsonPointers:
-        - /spec/selector/rollouts-pod-template-hash
+        - /spec/selector
   syncPolicy:
     automated:
       prune: true
