@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: go-ping-service-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/vovsike/DO.git
+    targetRevision: main
+    path: gitops/components/go-ping-service/overlayes/prod
+    kustomize: {}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: apps
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

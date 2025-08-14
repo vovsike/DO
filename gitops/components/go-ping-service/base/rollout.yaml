@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: go-ping-service
+  namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false, SkipDryRunOnMissingResource=true
+spec:
+  replicas: 3
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: go-ping-service
+  template:
+    metadata:
+      labels:
+        app: go-ping-service
+    spec:
+      containers:
+        - name: go-ping-service
+          image: ghcr.io/vovsike/go-ping-service:v1   # base image; overlay will bump this
+          ports:
+            - name: http
+              containerPort: 3000
+
+  strategy:
+    blueGreen:
+      activeService: go-ping-service
+      previewService: go-ping-service-preview
+      autoPromotionEnabled: false         # require manual promote
+      scaleDownDelaySeconds: 30           # optional safety delay

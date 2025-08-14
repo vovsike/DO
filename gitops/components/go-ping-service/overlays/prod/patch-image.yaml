@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: myapp
+  namespace: myapp
+spec:
+  template:
+    spec:
+      containers:
+        - name: myapp
+          image: ghcr.io/vovsike/go-ping-service:v1
