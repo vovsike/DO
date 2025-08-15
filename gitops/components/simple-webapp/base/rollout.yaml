@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: simple-webapp
+  namespace: apps
+spec:
+  replicas: 3
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: simple-webapp
+  template:
+    metadata:
+      labels:
+        app: simple-webapp
+    spec:
+      containers:
+        - name: simple-webapp
+          image: ghcr.io/vovsike/simple-webapp:v1   # base image; overlay will bump this
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            - name: apiURL
+              value: http://go-ping-service:80/
+  strategy:
+    blueGreen:
+      activeService: simple-webapp
+      previewService: simple-webapp-preview
+      autoPromotionEnabled: false         # require manual promote

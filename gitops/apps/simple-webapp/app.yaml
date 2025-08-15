@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: simple-webapp
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/vovsike/DO.git
+    targetRevision: main
+    path: gitops/components/simple-webapp/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: apps
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
