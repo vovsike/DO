@@ -5,3 +5,4 @@ resources:
   - services.yaml
   - deployments.yaml
   - serviceAccounts.yaml
+  - httpRoute.yaml
