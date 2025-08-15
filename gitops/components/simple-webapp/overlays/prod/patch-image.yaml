@@ -8,4 +8,4 @@ spec:
     spec:
       containers:
         - name: simple-webapp
-          image: ghcr.io/vovsike/simple-webapp:v1
+          image: ghcr.io/vovsike/simple-web-app:v1

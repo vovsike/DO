@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: simple-webapp
-          image: ghcr.io/vovsike/simple-webapp:v1   # base image; overlay will bump this
+          image: ghcr.io/vovsike/simple-web-app:v1   # base image; overlay will bump this
           ports:
             - name: http
               containerPort: 3000
