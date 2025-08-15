@@ -6,7 +6,7 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  name: simple-webapp-service
+  name: simple-webapp
   namespace: apps
 spec:
   selector:
