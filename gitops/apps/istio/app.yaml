@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://istio-release.storage.googleapis.com/charts
-    chart: istio/base
+    chart: base
     targetRevision: v1.27.0
     helm:
       releaseName: istio-base
@@ -35,7 +35,7 @@ spec:
   project: default
   source:
    repoURL: https://istio-release.storage.googleapis.com/charts
-  chart: istio/istiod
+  chart: istiod
   targetRevision: v1.27.0
   helm:
     parameters:
@@ -64,7 +64,7 @@ spec:
   project: default
   source:
     repoURL: https://istio-release.storage.googleapis.com/charts
-    chart: istio/cni
+    chart: cni
     targetRevision: v1.27.0
     helm:
       parameters:
@@ -93,7 +93,7 @@ spec:
   project: default
   source:
     repoURL: https://istio-release.storage.googleapis.com/charts
-    chart: istio/ztunnel
+    chart: ztunnel
     targetRevision: v1.27.0
     helm:
       releaseName: ztunnel
