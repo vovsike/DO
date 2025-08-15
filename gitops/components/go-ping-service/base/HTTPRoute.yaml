@@ -7,7 +7,7 @@ spec:
   - group: ""
     kind: go-ping-service
     name: reviews
-    port: 9080
+    port: 80
   rules:
   - matches:
     - headers:
@@ -15,7 +15,7 @@ spec:
         value: jason
     backendRefs:
     - name: go-ping-service
-      port: 9080
+      port: 80
   - backendRefs:
     - name: go-ping-service-preview
-      port: 9080
+      port: 80
