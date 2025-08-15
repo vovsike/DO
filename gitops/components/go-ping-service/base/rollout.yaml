@@ -17,9 +17,6 @@ spec:
       containers:
         - name: go-ping-service
           image: ghcr.io/vovsike/go-ping-service:v1   # base image; overlay will bump this
-          ports:
-            - name: http
-              containerPort: 3000
   strategy:
     blueGreen:
       activeService: go-ping-service

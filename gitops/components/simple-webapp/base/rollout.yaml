@@ -17,13 +17,6 @@ spec:
       containers:
         - name: simple-webapp
           image: ghcr.io/vovsike/simple-web-app:v1   # base image; overlay will bump this
-          ports:
-            - name: http
-              protocol: TCP
-              containerPort: 8080
-          env:
-            - name: apiURL
-              value: http://go-ping-service:80/
   strategy:
     blueGreen:
       activeService: simple-webapp

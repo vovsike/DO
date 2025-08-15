@@ -9,3 +9,6 @@ spec:
       containers:
         - name: go-ping-service
           image: ghcr.io/vovsike/go-ping-service:v1
+          ports:
+            - name: http
+              containerPort: 3000
