@@ -1,0 +1,50 @@
+- name: Configure kernel parameters for Kubernetes
+  hosts: control:worker
+  remote_user: root
+
+  tasks:
+    - name: Set net.ipv4.ip_forward
+      ansible.posix.sysctl:
+        name: net.ipv4.ip_forward
+        value: '1'
+        state: present
+        reload: true  # This applies the change immediately without a reboot
+        sysctl_set: true # This ensures it's persisted in the sysctl.d file
+
+- name: Install cilium cli on control
+  hosts: control
+  remote_user: root
+  vars:
+    cilium_cli_version: v0.18.6
+    cli_arch: amd64
+
+  tasks:
+    - name: Download Cilium CLI and sha256sum
+      ansible.builtin.get_url:
+        url: "https://github.com/cilium/cilium-cli/releases/download/{{ cilium_cli_version }}/cilium-linux-{{ cli_arch }}.tar.gz{{ item }}"
+        dest: "/tmp/cilium-linux-{{ cli_arch }}.tar.gz{{ item }}"
+        mode: '0644'
+      loop:
+        - ""
+        - ".sha256sum"
+
+    - name: Verify checksum
+      ansible.builtin.command:
+        cmd: "sha256sum --check cilium-linux-{{ cli_arch }}.tar.gz.sha256sum"
+        chdir: /tmp
+      register: checksum_result
+      changed_when: false
+
+    - name: Extract cilium binary to /usr/local/bin
+      ansible.builtin.unarchive:
+        src: "/tmp/cilium-linux-{{ cli_arch }}.tar.gz"
+        dest: /usr/local/bin
+        remote_src: true
+
+    - name: Remove downloaded tar.gz and checksum
+      ansible.builtin.file:
+        path: "/tmp/cilium-linux-{{ cli_arch }}.tar.gz{{ item }}"
+        state: absent
+      loop:
+        - ""
+        - ".sha256sum"

@@ -1,0 +1,54 @@
+- name: Deploy k8s cluster
+  hosts: all
+  remote_user: root
+
+  tasks:
+
+    - name: Copy a init file to the control plane
+      ansible.builtin.template:
+        src: /home/vovsike/k8s/DO/ansible/templates/kubeadm-config-control.yaml.j2
+        dest: /etc/kubernetes/kubeadm-config.yaml
+        owner: root
+        mode: "0644"
+      when: inventory_hostname == groups['control'][0]
+
+    - name: Set control plane IP
+      ansible.builtin.set_fact:
+        control_plane_endpoint: "{{ ansible_all_ipv4_addresses | select('match', '^10\\.0\\.0\\.') | first }}"
+      when: inventory_hostname == groups['control'][0]
+
+    - name: Init first master node
+      ansible.builtin.command: kubeadm init --config=/etc/kubernetes/kubeadm-config.yaml
+      when: inventory_hostname == groups['control'][0]
+      register: kubeadm_init
+      changed_when: true
+
+    - name: Extract join token
+      ansible.builtin.set_fact:
+        join_token: "{{ kubeadm_init.stdout_lines | select('match', '.*--token.*') | first | regex_replace('.*--token ([a-z0-9.]+).*', '\\1') }}"
+      when: inventory_hostname == groups['control'][0]
+
+    - name: Extract CA cert hash
+      ansible.builtin.set_fact:
+        ca_cert_hash: "{{ kubeadm_init.stdout_lines | select('match', '.*--discovery-token-ca-cert-hash.*') | first | regex_replace('.*--discovery-token-ca-cert-hash ([a-z0-9:]+).*', '\\1') }}"
+      when: inventory_hostname == groups['control'][0]
+
+    - name: Share join token and cert hash with other nodes
+      ansible.builtin.set_fact:
+        join_token: "{{ hostvars[groups['control'][0]]['join_token'] }}"
+        ca_cert_hash: "{{ hostvars[groups['control'][0]]['ca_cert_hash'] }}"
+        control_plane_endpoint: "{{ hostvars[groups['control'][0]]['control_plane_endpoint'] }}"
+      when: inventory_hostname != groups['control'][0]
+
+    - name: Generate kubeadm join config for other nodes
+      ansible.builtin.template:
+        src: /home/vovsike/k8s/DO/ansible/templates/kubeadm-config-worker.yaml.j2
+        dest: /etc/kubernetes/kubeadm-config.yaml
+        owner: root
+        mode: "0644"
+      when: inventory_hostname != groups['control'][0]
+
+    - name: Join other nodes to cluster
+      ansible.builtin.command: kubeadm join --config=/tmp/kubeadm-join-config.yaml
+      when: inventory_hostname != groups['control'][0]
+      changed_when: true

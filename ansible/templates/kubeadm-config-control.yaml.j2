@@ -1,0 +1,14 @@
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: ClusterConfiguration
+networking:
+  podSubnet: "10.10.0.0/16"
+  serviceSubnet: "10.100.0.0/16"
+---
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: "{{ ansible_all_ipv4_addresses | select('match', '^10\.0\.0\.') | first }}"
+nodeRegistration:
+  kubeletExtraArgs:
+    - name: node-ip
+      value: "{{ ansible_all_ipv4_addresses | select('match', '^10\.0\.0\.') | first }}"

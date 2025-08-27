@@ -1,0 +1,8 @@
+- name: Prepare nodes
+  import_playbook: 01-prepare-nodes.yaml
+
+- name: Configure nodes
+  import_playbook: 02-configure-nodes.yaml
+
+- name: Create cluster
+  import_playbook: 03-create-cluster.yaml

@@ -1,0 +1,52 @@
+- name: Prepare control and worker
+  hosts: control:worker
+  remote_user: root
+  vars:
+    kubernetes_version: "v1.32"
+    crio_version: "v1.32"
+
+  tasks:
+    - name: Install CRI-O dependancies
+      ansible.builtin.apt:
+        pkg:
+          - software-properties-common
+          - curl
+        update_cache: true
+
+    - name: Add Kubernetes APT repository key
+      ansible.builtin.apt_key:
+        url: "https://pkgs.k8s.io/core:/stable:/{{ kubernetes_version }}/deb/Release.key"
+        keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+        state: present
+
+    - name: Add Kubernetes APT repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/{{ kubernetes_version }}/deb/ /"
+        state: present
+        filename: kubernetes
+
+    - name: Add CRI-O APT repository key
+      ansible.builtin.apt_key:
+        url: "https://download.opensuse.org/repositories/isv:/cri-o:/stable:/{{ crio_version }}/deb/Release.key"
+        keyring: /etc/apt/keyrings/cri-o-apt-keyring.gpg
+        state: present
+
+    - name: Add CRI-O APT repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://download.opensuse.org/repositories/isv:/cri-o:/stable:/{{ crio_version }}/deb/ /"
+        state: present
+        filename: cro-o
+
+    - name: Install CRI-O and k8s bins
+      ansible.builtin.apt:
+        pkg:
+          - cri-o
+          - kubelet
+          - kubeadm
+          - kubectl
+        update_cache: true
+
+    - name: Start CRI-O
+      ansible.builtin.systemd_service:
+        state: started
+        name: crio.service
